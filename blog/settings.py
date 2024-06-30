@@ -16,7 +16,6 @@ from pathlib import Path
 
 import environ
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,6 +32,9 @@ DEBUG = bool(distutils.util.strtobool(os.environ.get('DEBUG', "false")))
 ALLOWED_HOSTS = []
 ALLOWED_HOSTS.extend(filter(None, os.environ.get('ALLOWED_HOSTS', '').split(',')))
 
+print("=" * 100)
+print(os.environ.get("ALLOWED_HOSTS"), os.environ.get("DEBUG"), os.environ.get("DB_ENGINE"))
+print("=" * 100)
 # Application definition
 
 INSTALLED_APPS = [
