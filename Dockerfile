@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update -qq && \
-    apt-get install -y postgresql-client gettext ffmpeg && \
+    apt-get install -y postgresql-client gettext && \
     rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /requirements.txt
