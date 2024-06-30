@@ -19,8 +19,6 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-l&99yhhb0!^78i_c=d%h71fbxn7y3x^^!0!quzra3*u*2^^qwm')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(distutils.util.strtobool(os.environ.get('DEBUG', "false")))
 
@@ -172,4 +170,3 @@ if 'test' in sys.argv:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-
