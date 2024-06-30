@@ -43,4 +43,4 @@ USER app
 
 EXPOSE 8000
 
-CMD ["bash", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 --workers 2 app.wsgi:application --log-level debug"]
+CMD ["bash", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 --workers 2 blog.wsgi:application --log-level debug"]
