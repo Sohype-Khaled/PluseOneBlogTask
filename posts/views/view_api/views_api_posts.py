@@ -4,12 +4,17 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from rest_framework.generics import get_object_or_404
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from posts.filters import PostFilterSet
 from posts.models import Post
 from posts.serializers import PostSerializer
+
+
+class Paginator(LimitOffsetPagination):
+    default_limit = 20
 
 
 class PostViewSet(ViewSet):
@@ -36,12 +41,26 @@ class PostViewSet(ViewSet):
                 description="Filter posts by tag IDs (comma-separated)",
                 type=openapi.TYPE_STRING,
             ),
+            openapi.Parameter(
+                name='limit',
+                in_=openapi.IN_QUERY,
+                description="Limit the posts results",
+                type=openapi.TYPE_INTEGER,
+            ),
+            openapi.Parameter(
+                name='offset',
+                in_=openapi.IN_QUERY,
+                description="The starting offset of results",
+                type=openapi.TYPE_INTEGER,
+            ),
         ],
         responses={200: PostSerializer(many=True)})
     def list(self, request):
         queryset = PostFilterSet(request.GET, self.queryset).qs
-        serializer = PostSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginator = Paginator()
+        objects = paginator.paginate_queryset(queryset, request)
+        serializer = PostSerializer(objects, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     @swagger_auto_schema(
         operation_description="Create a new post",

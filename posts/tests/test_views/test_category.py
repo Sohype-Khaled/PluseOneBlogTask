@@ -47,11 +47,13 @@ class CategoriesListAPIViewStructureTestCase(TestCase):
 
 
 class CategoriesListAPIViewTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        CategoryFactory.create_batch(20)
+
     def setUp(self):
         self.client = APIClient()
         self.url = reverse("api:categories:listing")
-        for i in range(20):
-            CategoryFactory()
 
     def test_it_returns_200_status_code(self):
         response = self.client.get(self.url)

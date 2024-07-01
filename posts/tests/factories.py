@@ -25,7 +25,7 @@ class PostFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Post
 
-    title = factory.Faker('sentence')
+    title = factory.Sequence(lambda n: "Post #%s" % n)
     content = factory.Faker('paragraph')
 
     @factory.lazy_attribute
